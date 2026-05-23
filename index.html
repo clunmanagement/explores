@@ -1,697 +1,1105 @@
 <!DOCTYPE html>
-<html lang="es-PR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a0a" />
-  <title>Patio Limpio PR — Diseño Paisajista de Alto Nivel en Puerto Rico</title>
-  <meta name="description" content="Diseño paisajista y diseño de jardines de lujo en Puerto Rico. Proyectos residenciales exclusivos y comerciales de primer nivel. Llama al (939) 438-7228." />
-  <meta property="og:title" content="Patio Limpio PR — Diseño Paisajista" />
-  <meta property="og:description" content="Diseñamos y mantenemos entornos exteriores de lujo en Puerto Rico. Desde residencias exclusivas hasta propiedades comerciales de primer nivel." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_PR" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./style-2.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oswell — Recovery System</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0f;
+    --surface: #141416;
+    --card: #1a1a1e;
+    --border: #2a2a30;
+    --accent: #c8f135;
+    --accent2: #f1a035;
+    --accent3: #35c8f1;
+    --muted: #555560;
+    --text: #e8e8ec;
+    --sub: #888894;
+    --red: #f15535;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 10vw, 80px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .header-left p {
+    color: var(--sub);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .date-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--sub);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  #day-counter {
+    font-size: 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--accent2);
+    display: block;
+  }
+
+  /* STREAK BAR */
+  .streak-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .streak-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .streak-card:hover { border-color: var(--accent); }
+
+  .streak-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .streak-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sub);
+    margin-top: 4px;
+  }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* DAILY CHECKLIST */
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 560px) { .checklist-grid { grid-template-columns: 1fr; } }
+
+  .check-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .check-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .check-card.done {
+    border-color: var(--accent);
+    background: #1a1e10;
+  }
+
+  .check-card.done .check-icon { background: var(--accent); color: #0d0d0f; }
+
+  .check-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.18s;
+  }
+
+  .check-content h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .check-content p {
+    font-size: 12px;
+    color: var(--sub);
+    line-height: 1.4;
+  }
+
+  .check-tag {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    display: inline-block;
+    font-weight: 500;
+  }
+
+  .tag-nutrition { background: #1f2e10; color: var(--accent); }
+  .tag-movement { background: #1f2510; color: var(--accent2); }
+  .tag-recovery { background: #101e2a; color: var(--accent3); }
+  .tag-body { background: #2a1010; color: var(--red); }
+
+  /* NUTRITION LOG */
+  .meal-section { margin-bottom: 32px; }
+
+  .meal-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 560px) { .meal-slots { grid-template-columns: 1fr; } }
+
+  .meal-slot {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .meal-slot-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--sub);
+    margin-bottom: 8px;
+  }
+
+  .meal-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    resize: none;
+    min-height: 60px;
+    line-height: 1.5;
+  }
+
+  .meal-input::placeholder { color: var(--muted); }
+
+  /* WATER TRACKER */
+  .water-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .water-cup {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .water-cup.filled { background: #101e2a; border-color: var(--accent3); }
+  .water-cup:hover { transform: scale(1.1); }
+
+  .water-label {
+    align-self: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--sub);
+    margin-left: 4px;
+  }
+
+  /* MOVEMENT LOG */
+  .movement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 560px) { .movement-grid { grid-template-columns: 1fr; } }
+
+  .movement-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s;
+    text-align: left;
+  }
+
+  .movement-btn:hover { border-color: var(--accent2); }
+  .movement-btn.active { border-color: var(--accent2); background: #1e1a10; }
+  .movement-btn .mov-icon { font-size: 20px; }
+
+  .movement-btn small {
+    display: block;
+    color: var(--sub);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* SLEEP */
+  .sleep-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 560px) { .sleep-row { grid-template-columns: 1fr; } }
+
+  .sleep-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .sleep-card label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sub);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .sleep-select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .quality-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .qdot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .qdot.sel { border-color: var(--accent3); background: #101e2a; }
+
+  /* WEEKLY PROGRESS */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+
+  .day-cell {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+  }
+
+  .day-cell.today { border-color: var(--accent); }
+
+  .day-name {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--sub);
+    margin-bottom: 6px;
+  }
+
+  .day-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--muted);
+  }
+
+  .day-cell.today .day-score { color: var(--accent); }
+
+  /* NOTES */
+  .notes-area {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 32px;
+  }
+
+  .notes-area textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    resize: none;
+    min-height: 80px;
+    line-height: 1.7;
+  }
+
+  .notes-area textarea::placeholder { color: var(--muted); }
+
+  /* RESET + SAVE */
+  .action-row {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 14px;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0d0d0f;
+  }
+
+  .btn-primary:hover { background: #d4ff3f; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--sub);
+  }
+
+  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+  /* KNEE REMINDER BANNER */
+  .knee-banner {
+    background: linear-gradient(135deg, #1e1010, #2a1a10);
+    border: 1px solid #3a2010;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .knee-banner .icon { font-size: 28px; }
+
+  .knee-banner h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent2);
+    margin-bottom: 4px;
+  }
+
+  .knee-banner p { font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+  /* SCORE RING */
+  .score-ring-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .score-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  .score-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  .score-ring .ring-bg { fill: none; stroke: var(--border); stroke-width: 8; }
+  .score-ring .ring-fg { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .score-pct { font-size: 11px; color: var(--sub); }
+
+  .score-breakdown { flex: 1; min-width: 200px; }
+
+  .sb-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .sb-label { font-size: 12px; color: var(--sub); width: 80px; }
+
+  .sb-bar-wrap {
+    flex: 1;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .sb-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .sb-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--sub);
+    width: 28px;
+    text-align: right;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--accent);
+    color: #0d0d0f;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: transform 0.3s ease;
+    z-index: 999;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .container > * {
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .container > *:nth-child(1) { animation-delay: 0s; }
+  .container > *:nth-child(2) { animation-delay: 0.05s; }
+  .container > *:nth-child(3) { animation-delay: 0.1s; }
+  .container > *:nth-child(4) { animation-delay: 0.15s; }
+  .container > *:nth-child(5) { animation-delay: 0.2s; }
+  .container > *:nth-child(6) { animation-delay: 0.25s; }
+  .container > *:nth-child(7) { animation-delay: 0.3s; }
+</style>
 </head>
 <body>
 
-<!-- ============================================================
-     NAVIGATION
-     ============================================================ -->
-<nav class="nav" aria-label="Navegación principal">
-  <div class="container">
-    <div class="nav__inner">
+<div class="container">
 
-      <a href="#inicio" class="nav__logo" aria-label="Patio Limpio PR — Inicio">
-        <img src="./patio-limpio-logo-dark-optimized.png" alt="Patio Limpio PR" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
-        <span class="nav__logo-fallback">PATIO LIMPIO PR</span>
-      </a>
-
-      <ul class="nav__links" role="list">
-        <li><a href="#servicios" data-lang="es" class="lang-visible">Servicios</a><a href="#servicios" data-lang="en">Services</a></li>
-        <li><a href="#planes" data-lang="es" class="lang-visible">Planes</a><a href="#planes" data-lang="en">Plans</a></li>
-        <li><a href="#comercial" data-lang="es" class="lang-visible">Comercial</a><a href="#comercial" data-lang="en">Commercial</a></li>
-        <li><a href="#cotizacion" data-lang="es" class="lang-visible">Contacto</a><a href="#cotizacion" data-lang="en">Contact</a></li>
-      </ul>
-
-      <div class="nav__actions">
-        <div class="lang-toggle" role="group" aria-label="Idioma / Language">
-          <button data-set="es" aria-label="Español">ES</button>
-          <button data-set="en" aria-label="English">EN</button>
-        </div>
-        <a href="tel:+19394387228" class="btn btn-primary nav__cta">
-          📞 (939) 438-7228
-        </a>
-        <button class="nav__hamburger" aria-label="Abrir menú" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>REBUILD</h1>
+      <p>Oswell's Recovery System</p>
     </div>
+    <div class="date-badge">
+      <span id="day-counter">DAY 1</span>
+      <span id="today-date"></span>
+      <span style="color:var(--accent2)">Knee recovery active</span>
+    </div>
+  </header>
 
-    <div class="nav__mobile" role="menu">
-      <a href="#servicios" role="menuitem" data-lang="es" class="lang-visible">Servicios</a>
-      <a href="#servicios" role="menuitem" data-lang="en">Services</a>
-      <a href="#planes" role="menuitem" data-lang="es" class="lang-visible">Planes</a>
-      <a href="#planes" role="menuitem" data-lang="en">Plans</a>
-      <a href="#comercial" role="menuitem" data-lang="es" class="lang-visible">Comercial</a>
-      <a href="#comercial" role="menuitem" data-lang="en">Commercial</a>
-      <a href="#cotizacion" role="menuitem" data-lang="es" class="lang-visible">Cotización gratis</a>
-      <a href="#cotizacion" role="menuitem" data-lang="en">Free quote</a>
-      <div class="nav__mobile-ctas">
-        <a href="tel:+19394387228" class="btn btn-primary btn-full">📞 (939) 438-7228</a>
-        <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n."
-           class="btn btn-whatsapp btn-full" target="_blank" rel="noopener">💬 WhatsApp</a>
+  <!-- STREAKS -->
+  <div class="streak-row">
+    <div class="streak-card">
+      <div class="streak-val" id="streak-nutrition">0</div>
+      <div class="streak-label">🥗 Nutrition streak</div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-val" id="streak-movement">0</div>
+      <div class="streak-label">💪 Movement streak</div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-val" id="streak-sleep">0</div>
+      <div class="streak-label">😴 Sleep streak</div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-val" id="streak-water">0</div>
+      <div class="streak-label">💧 Water streak</div>
+    </div>
+  </div>
+
+  <!-- TODAY'S SCORE -->
+  <div class="section-label">Today's score</div>
+  <div class="score-ring-wrap">
+    <div class="score-ring">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle class="ring-fg" id="score-ring-fg" cx="60" cy="60" r="52"
+          stroke-dasharray="327"
+          stroke-dashoffset="327"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-num" id="score-num">0</div>
+        <div class="score-pct">/ 10</div>
+      </div>
+    </div>
+    <div class="score-breakdown">
+      <div class="sb-row">
+        <span class="sb-label">Nutrition</span>
+        <div class="sb-bar-wrap"><div class="sb-bar" id="bar-n" style="width:0%;background:var(--accent)"></div></div>
+        <span class="sb-val" id="val-n">0/3</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">Movement</span>
+        <div class="sb-bar-wrap"><div class="sb-bar" id="bar-m" style="width:0%;background:var(--accent2)"></div></div>
+        <span class="sb-val" id="val-m">0/2</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">Hydration</span>
+        <div class="sb-bar-wrap"><div class="sb-bar" id="bar-w" style="width:0%;background:var(--accent3)"></div></div>
+        <span class="sb-val" id="val-w">0/8</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">Sleep</span>
+        <div class="sb-bar-wrap"><div class="sb-bar" id="bar-s" style="width:0%;background:#a57cf1"></div></div>
+        <span class="sb-val" id="val-s">0/2</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">Habits</span>
+        <div class="sb-bar-wrap"><div class="sb-bar" id="bar-h" style="width:0%;background:var(--red)"></div></div>
+        <span class="sb-val" id="val-h">0/3</span>
       </div>
     </div>
   </div>
-</nav>
 
-
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-<section class="hero" id="inicio">
-  <div class="container">
-    <div class="hero__inner">
-
-      <div class="hero__copy">
-        <div class="hero__eyebrow">
-          <span class="hero__eyebrow-line"></span>
-          <span data-lang="es" class="lang-visible">Diseño Paisajista · Puerto Rico</span>
-          <span data-lang="en">Landscape Design · Puerto Rico</span>
-        </div>
-
-        <h1 class="hero__title">
-          <span data-lang="es" class="lang-visible">Espacios exteriores<br />de <em>alto nivel.</em></span>
-          <span data-lang="en">Outdoor spaces<br />of <em>distinction.</em></span>
-        </h1>
-
-        <p class="hero__subtitle">
-          <span data-lang="es" class="lang-visible">Diseñamos y mantenemos entornos exteriores de lujo en Puerto Rico. Desde proyectos residenciales exclusivos hasta propiedades comerciales de primer nivel.</span>
-          <span data-lang="en">We design and maintain luxury outdoor environments across Puerto Rico. From exclusive residential projects to premier commercial properties.</span>
-        </p>
-
-        <div class="hero__ctas">
-          <a href="tel:+19394387228" class="btn btn-primary btn-lg">
-            📞 <span data-lang="es" class="lang-visible">Llámanos</span><span data-lang="en">Call Us</span>
-          </a>
-          <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20un%20proyecto%20de%20dise%C3%B1o%20paisajista."
-             class="btn btn-outline-white btn-lg" target="_blank" rel="noopener noreferrer">
-            💬 WhatsApp
-          </a>
-        </div>
-
-        <div class="hero__trust">
-          <div class="hero__trust-item">
-            <span class="hero__trust-dot"></span>
-            <span data-lang="es" class="lang-visible">Diseño personalizado</span>
-            <span data-lang="en">Custom design</span>
-          </div>
-          <div class="hero__trust-item">
-            <span class="hero__trust-dot"></span>
-            <span data-lang="es" class="lang-visible">Trabajo asegurado</span>
-            <span data-lang="en">Insured work</span>
-          </div>
-          <div class="hero__trust-item">
-            <span class="hero__trust-dot"></span>
-            <span data-lang="es" class="lang-visible">Cotización gratis</span>
-            <span data-lang="en">Free estimate</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero__visual">
-        <div class="hero__visual-card">
-          <div class="hero__visual-logo">
-            <img src="./patio-limpio-logo-dark-optimized.png" alt="Patio Limpio PR"
-                 onerror="this.outerHTML='<span style=\'font-size:2rem\'>🌿</span>'" />
-          </div>
-          <div class="hero__visual-stats">
-            <div class="hero__stat">
-              <div class="hero__stat-num">100%</div>
-              <div class="hero__stat-label" data-lang="es">Satisfacción</div>
-              <div class="hero__stat-label" data-lang="en">Satisfaction</div>
-            </div>
-            <div class="hero__stat">
-              <div class="hero__stat-num">5★</div>
-              <div class="hero__stat-label" data-lang="es">En Google</div>
-              <div class="hero__stat-label" data-lang="en">On Google</div>
-            </div>
-            <div class="hero__stat">
-              <div class="hero__stat-num">PR</div>
-              <div class="hero__stat-label" data-lang="es">Toda la isla</div>
-              <div class="hero__stat-label" data-lang="en">Island-wide</div>
-            </div>
-            <div class="hero__stat">
-              <div class="hero__stat-num">$0</div>
-              <div class="hero__stat-label" data-lang="es">Cotización</div>
-              <div class="hero__stat-label" data-lang="en">To quote</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+  <!-- KNEE BANNER -->
+  <div class="knee-banner">
+    <div class="icon">🦵</div>
+    <div>
+      <h3>Knee Recovery Protocol Active</h3>
+      <p>Low-impact only — swimming, cycling, upper body, mobility work. No impact until cleared. Track pain level daily (optional) and note any changes.</p>
     </div>
   </div>
-</section>
 
+  <!-- DAILY HABITS -->
+  <div class="section-label">Daily habits</div>
+  <div class="checklist-grid" id="habits-grid">
 
-<!-- ============================================================
-     TRUST STRIP
-     ============================================================ -->
-<div class="trust-strip">
-  <div class="container">
-    <div class="trust-strip__grid">
-      <div class="trust-item">
-        <span class="trust-item__dot"></span>
-        <span class="trust-item__text" data-lang="es">Diseño paisajista</span>
-        <span class="trust-item__text" data-lang="en">Landscape design</span>
+    <div class="check-card" data-id="h1" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-nutrition">Nutrition</span>
+        <h3>Eat 3 structured meals</h3>
+        <p>No skipping. Whole foods priority, protein at every meal.</p>
       </div>
-      <div class="trust-item">
-        <span class="trust-item__dot"></span>
-        <span class="trust-item__text" data-lang="es">Diseño de jardines</span>
-        <span class="trust-item__text" data-lang="en">Garden design</span>
+    </div>
+
+    <div class="check-card" data-id="h2" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-nutrition">Nutrition</span>
+        <h3>No ultra-processed food</h3>
+        <p>Skip the shortcuts today. Cook or prep something real.</p>
       </div>
-      <div class="trust-item">
-        <span class="trust-item__dot"></span>
-        <span class="trust-item__text" data-lang="es">Proyectos comerciales</span>
-        <span class="trust-item__text" data-lang="en">Commercial projects</span>
+    </div>
+
+    <div class="check-card" data-id="h3" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-nutrition">Nutrition</span>
+        <h3>Protein target hit</h3>
+        <p>Aim for ~0.8–1g per lb bodyweight. Eggs, legumes, fish, chicken.</p>
       </div>
-      <div class="trust-item">
-        <span class="trust-item__dot"></span>
-        <span class="trust-item__text" data-lang="es">Mantenimiento de élite</span>
-        <span class="trust-item__text" data-lang="en">Elite maintenance</span>
+    </div>
+
+    <div class="check-card" data-id="h4" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-movement">Movement</span>
+        <h3>Low-impact session done</h3>
+        <p>Swim, bike, upper body lift, or 30min mobility. Knee-safe only.</p>
       </div>
-      <div class="trust-item">
-        <span class="trust-item__dot"></span>
-        <span class="trust-item__text" data-lang="es">Cotización gratuita</span>
-        <span class="trust-item__text" data-lang="en">Free estimate</span>
+    </div>
+
+    <div class="check-card" data-id="h5" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-movement">Movement</span>
+        <h3>Knee rehab exercises</h3>
+        <p>Quad sets, straight leg raises, calf raises. 10 min is enough.</p>
+      </div>
+    </div>
+
+    <div class="check-card" data-id="h6" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-recovery">Recovery</span>
+        <h3>In bed by 11 PM</h3>
+        <p>Your 6:45 AM wake means 7hrs needs you in bed before midnight.</p>
+      </div>
+    </div>
+
+    <div class="check-card" data-id="h7" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-recovery">Recovery</span>
+        <h3>No phone 30 min before bed</h3>
+        <p>Protect sleep quality. Read, stretch, or journal instead.</p>
+      </div>
+    </div>
+
+    <div class="check-card" data-id="h8" onclick="toggleCheck(this)">
+      <div class="check-icon">✓</div>
+      <div class="check-content">
+        <span class="check-tag tag-body">Body</span>
+        <h3>Weigh yourself (morning)</h3>
+        <p>After waking, before eating. Consistent tracking = real data.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NUTRITION LOG -->
+  <div class="section-label">Meal log</div>
+  <div class="meal-section">
+    <div class="meal-slots">
+      <div class="meal-slot">
+        <div class="meal-slot-title">🌅 Breakfast</div>
+        <textarea class="meal-input" placeholder="What did you eat?&#10;E.g. 3 eggs, oats, banana" id="meal-breakfast"></textarea>
+      </div>
+      <div class="meal-slot">
+        <div class="meal-slot-title">☀️ Lunch</div>
+        <textarea class="meal-input" placeholder="What did you eat?&#10;E.g. rice, grilled chicken, salad" id="meal-lunch"></textarea>
+      </div>
+      <div class="meal-slot">
+        <div class="meal-slot-title">🌙 Dinner</div>
+        <textarea class="meal-input" placeholder="What did you eat?&#10;E.g. fish, sweet potato, veggies" id="meal-dinner"></textarea>
       </div>
     </div>
   </div>
+
+  <!-- WATER TRACKER -->
+  <div class="section-label">Hydration — tap each 250ml glass</div>
+  <div class="water-row" id="water-row">
+    <!-- generated by JS -->
+    <span class="water-label" id="water-label">0 / 2L</span>
+  </div>
+
+  <!-- MOVEMENT LOG -->
+  <div class="section-label">Today's movement</div>
+  <div class="movement-grid">
+    <button class="movement-btn" data-mov="swim" onclick="toggleMov(this)">
+      <span class="mov-icon">🏊</span>
+      <div><strong>Swimming</strong><small>Full cardio, zero knee load</small></div>
+    </button>
+    <button class="movement-btn" data-mov="cycle" onclick="toggleMov(this)">
+      <span class="mov-icon">🚴</span>
+      <div><strong>Cycling</strong><small>Stationary or road, low impact</small></div>
+    </button>
+    <button class="movement-btn" data-mov="upper" onclick="toggleMov(this)">
+      <span class="mov-icon">💪</span>
+      <div><strong>Upper Body Lift</strong><small>Push/pull/press, seated where needed</small></div>
+    </button>
+    <button class="movement-btn" data-mov="mobility" onclick="toggleMov(this)">
+      <span class="mov-icon">🧘</span>
+      <div><strong>Mobility / Stretch</strong><small>Hip flexors, hamstrings, quad release</small></div>
+    </button>
+    <button class="movement-btn" data-mov="walk" onclick="toggleMov(this)">
+      <span class="mov-icon">🚶</span>
+      <div><strong>Walking</strong><small>Flat terrain, no pain threshold</small></div>
+    </button>
+    <button class="movement-btn" data-mov="rehab" onclick="toggleMov(this)">
+      <span class="mov-icon">🦵</span>
+      <div><strong>Knee Rehab</strong><small>Quad sets, SLR, calf raises</small></div>
+    </button>
+  </div>
+
+  <!-- SLEEP -->
+  <div class="section-label">Sleep last night</div>
+  <div class="sleep-row">
+    <div class="sleep-card">
+      <label>Hours slept</label>
+      <select class="sleep-select" id="sleep-hours">
+        <option value="">— select —</option>
+        <option>4h or less</option>
+        <option>5h</option>
+        <option>6h</option>
+        <option>7h</option>
+        <option>8h</option>
+        <option>9h+</option>
+      </select>
+    </div>
+    <div class="sleep-card">
+      <label>Sleep quality</label>
+      <div class="quality-dots">
+        <div class="qdot" onclick="setQuality(1, this)">😩</div>
+        <div class="qdot" onclick="setQuality(2, this)">😐</div>
+        <div class="qdot" onclick="setQuality(3, this)">😊</div>
+        <div class="qdot" onclick="setQuality(4, this)">🌟</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEKLY VIEW -->
+  <div class="section-label">This week</div>
+  <div class="week-grid" id="week-grid"></div>
+
+  <!-- NOTES -->
+  <div class="section-label">Daily note</div>
+  <div class="notes-area">
+    <textarea id="daily-note" placeholder="How are you feeling? Energy level? Knee pain today (1–10)? Anything off with appetite or sleep?&#10;&#10;This is your check-in — be honest."></textarea>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-row">
+    <button class="btn btn-ghost" onclick="resetDay()">Reset Day</button>
+    <button class="btn btn-primary" onclick="saveDay()">Save Today ✓</button>
+  </div>
+
 </div>
 
+<div class="toast" id="toast">DAY SAVED ✓</div>
 
-<!-- ============================================================
-     SERVICES — 6 cards, 3×2 grid
-     ============================================================ -->
-<section class="section" id="servicios">
-  <div class="container">
+<script>
+  // ── State ──────────────────────────────────────────────────────
+  const TODAY_KEY = new Date().toISOString().split('T')[0];
+  const HISTORY_KEY = 'rebuild_history';
+  let waterFilled = 0;
+  let qualityRating = 0;
 
-    <div class="section-header fade-up">
-      <p class="section-eyebrow">
-        <span data-lang="es" class="lang-visible">Lo que hacemos</span>
-        <span data-lang="en">What we do</span>
-      </p>
-      <h2 class="section-title">
-        <span data-lang="es" class="lang-visible">Servicios de diseño<br />paisajista y mantenimiento</span>
-        <span data-lang="en">Landscape design<br />& maintenance services</span>
-      </h2>
-      <p class="section-subtitle">
-        <span data-lang="es" class="lang-visible">Cada proyecto es único. Desde la concepción del diseño hasta el mantenimiento de élite, entregamos resultados que elevan el valor de tu propiedad.</span>
-        <span data-lang="en">Every project is unique. From design concept to elite maintenance, we deliver results that elevate your property's value.</span>
-      </p>
-    </div>
+  // ── Init ───────────────────────────────────────────────────────
+  function init() {
+    setDate();
+    buildWater();
+    buildWeek();
+    loadToday();
+    updateScore();
+  }
 
-    <div class="services-grid">
+  function setDate() {
+    const now = new Date();
+    document.getElementById('today-date').textContent =
+      now.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">01</div>
-        <h3 class="service-card__title" data-lang="es">Diseño Paisajista</h3>
-        <h3 class="service-card__title" data-lang="en">Landscape Design</h3>
-        <p class="service-card__desc" data-lang="es">Planificación integral de espacios exteriores. Diseño de planos, selección de materiales, flora tropical y ejecución de proyectos de alto nivel.</p>
-        <p class="service-card__desc" data-lang="en">Comprehensive outdoor space planning. Design blueprints, material selection, tropical flora, and high-end project execution.</p>
-      </div>
+    const start = localStorage.getItem('rebuild_start');
+    if (!start) localStorage.setItem('rebuild_start', TODAY_KEY);
+    const startDate = new Date(localStorage.getItem('rebuild_start'));
+    const diff = Math.floor((now - startDate) / 86400000) + 1;
+    document.getElementById('day-counter').textContent = 'DAY ' + diff;
+  }
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">02</div>
-        <h3 class="service-card__title" data-lang="es">Diseño de Jardines</h3>
-        <h3 class="service-card__title" data-lang="en">Garden Design</h3>
-        <p class="service-card__desc" data-lang="es">Creamos jardines únicos con plantas tropicales, piedras decorativas, mulch y elementos de diseño que transforman cualquier espacio.</p>
-        <p class="service-card__desc" data-lang="en">We create unique gardens with tropical plants, decorative stone, mulch, and design elements that transform any space.</p>
-      </div>
+  // ── Water ──────────────────────────────────────────────────────
+  function buildWater() {
+    const row = document.getElementById('water-row');
+    const label = document.getElementById('water-label');
+    for (let i = 0; i < 8; i++) {
+      const cup = document.createElement('div');
+      cup.className = 'water-cup';
+      cup.textContent = '💧';
+      cup.dataset.idx = i;
+      cup.onclick = () => {
+        const idx = parseInt(cup.dataset.idx);
+        waterFilled = waterFilled > idx ? idx : idx + 1;
+        updateWater();
+        updateScore();
+      };
+      row.insertBefore(cup, label);
+    }
+    updateWater();
+  }
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">03</div>
-        <h3 class="service-card__title" data-lang="es">Corte de Grama</h3>
-        <h3 class="service-card__title" data-lang="en">Lawn Care</h3>
-        <p class="service-card__desc" data-lang="es">Corte de precisión, bordes perfectos y recogida de residuos. Mantenemos tu grama a la altura de una propiedad de primer nivel.</p>
-        <p class="service-card__desc" data-lang="en">Precision mowing, perfect edging, and debris removal. We keep your lawn at the standard of a premier property.</p>
-      </div>
+  function updateWater() {
+    const cups = document.querySelectorAll('.water-cup');
+    cups.forEach((c, i) => {
+      c.classList.toggle('filled', i < waterFilled);
+    });
+    document.getElementById('water-label').textContent = (waterFilled * 0.25).toFixed(2).replace('.00','') + 'L / 2L';
+  }
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">04</div>
-        <h3 class="service-card__title" data-lang="es">Poda y Escultura de Plantas</h3>
-        <h3 class="service-card__title" data-lang="en">Tree & Shrub Sculpting</h3>
-        <p class="service-card__desc" data-lang="es">Poda artística de árboles y arbustos. Damos forma, estructura y salud a tu vegetación con técnica y criterio estético.</p>
-        <p class="service-card__desc" data-lang="en">Artistic trimming of trees and shrubs. We shape, structure, and care for your vegetation with technique and aesthetic precision.</p>
-      </div>
+  // ── Habits ─────────────────────────────────────────────────────
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    updateScore();
+  }
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">05</div>
-        <h3 class="service-card__title" data-lang="es">Limpieza y Restauración</h3>
-        <h3 class="service-card__title" data-lang="en">Cleanup & Restoration</h3>
-        <p class="service-card__desc" data-lang="es">Limpieza profunda de patios, retiro de escombros, vegetación invasora y restauración de espacios descuidados a su máximo esplendor.</p>
-        <p class="service-card__desc" data-lang="en">Deep yard cleanup, debris removal, invasive vegetation clearing, and restoration of neglected spaces to their full potential.</p>
-      </div>
+  // ── Movement ───────────────────────────────────────────────────
+  function toggleMov(el) {
+    el.classList.toggle('active');
+  }
 
-      <div class="service-card fade-up">
-        <div class="service-card__num">06</div>
-        <h3 class="service-card__title" data-lang="es">Control de Maleza</h3>
-        <h3 class="service-card__title" data-lang="en">Weed Management</h3>
-        <p class="service-card__desc" data-lang="es">Eliminación y control preventivo de maleza en bordes, aceras y jardines. Tu propiedad siempre impecable entre visita y visita.</p>
-        <p class="service-card__desc" data-lang="en">Weed elimination and preventive control in borders, walkways, and garden beds. Your property always flawless between visits.</p>
-      </div>
+  // ── Sleep quality ──────────────────────────────────────────────
+  function setQuality(val, el) {
+    qualityRating = val;
+    document.querySelectorAll('.qdot').forEach(d => d.classList.remove('sel'));
+    el.classList.add('sel');
+    updateScore();
+  }
 
-    </div>
-  </div>
-</section>
+  // ── Score ──────────────────────────────────────────────────────
+  function updateScore() {
+    // Nutrition checks: h1, h2, h3
+    const n = ['h1','h2','h3'].filter(id => document.querySelector(`[data-id="${id}"]`)?.classList.contains('done')).length;
+    // Movement: h4, h5
+    const m = ['h4','h5'].filter(id => document.querySelector(`[data-id="${id}"]`)?.classList.contains('done')).length;
+    // Water
+    const w = waterFilled;
+    // Sleep: h6, h7
+    const s = ['h6','h7'].filter(id => document.querySelector(`[data-id="${id}"]`)?.classList.contains('done')).length;
+    // Habits: h8 + sleep quality (if > 0) + sleep hours logged
+    const sleepLogged = document.getElementById('sleep-hours').value ? 1 : 0;
+    const h = ['h8'].filter(id => document.querySelector(`[data-id="${id}"]`)?.classList.contains('done')).length
+              + (qualityRating > 0 ? 1 : 0) + sleepLogged;
 
+    // Points out of 10
+    const raw = (n/3)*2.5 + (m/2)*2 + Math.min(w/8,1)*2 + (s/2)*2 + Math.min(h/3,1)*1.5;
+    const score = Math.round(raw * 10) / 10;
 
-<!-- ============================================================
-     PLANS — 3 cards: single, bi-weekly (featured), commercial
-     ============================================================ -->
-<section class="section section--alt" id="planes">
-  <div class="container">
+    document.getElementById('score-num').textContent = score.toFixed(1);
+    const offset = 327 - (score / 10) * 327;
+    document.getElementById('score-ring-fg').style.strokeDashoffset = offset;
 
-    <div class="section-header section-header--center fade-up">
-      <p class="section-eyebrow">
-        <span data-lang="es" class="lang-visible">Planes de servicio</span>
-        <span data-lang="en">Service plans</span>
-      </p>
-      <h2 class="section-title">
-        <span data-lang="es" class="lang-visible">Elige el plan adecuado<br />para tu propiedad</span>
-        <span data-lang="en">Choose the right plan<br />for your property</span>
-      </h2>
-      <p class="section-subtitle">
-        <span data-lang="es" class="lang-visible">Todos los planes incluyen evaluación gratuita y se adaptan al tamaño y las necesidades específicas de tu propiedad.</span>
-        <span data-lang="en">All plans include a free assessment and are tailored to the size and specific needs of your property.</span>
-      </p>
-    </div>
+    document.getElementById('bar-n').style.width = (n/3*100)+'%';
+    document.getElementById('val-n').textContent = n+'/3';
+    document.getElementById('bar-m').style.width = (m/2*100)+'%';
+    document.getElementById('val-m').textContent = m+'/2';
+    document.getElementById('bar-w').style.width = Math.min(w/8*100,100)+'%';
+    document.getElementById('val-w').textContent = w+'/8';
+    document.getElementById('bar-s').style.width = (s/2*100)+'%';
+    document.getElementById('val-s').textContent = s+'/2';
+    document.getElementById('bar-h').style.width = Math.min(h/3*100,100)+'%';
+    document.getElementById('val-h').textContent = Math.min(h,3)+'/3';
 
-    <div class="plans-grid">
+    updateStreaks(n, m, s, w);
+  }
 
-      <!-- Single service -->
-      <div class="plan-card fade-up">
-        <div class="plan-card__header">
-          <div class="plan-card__name" data-lang="es">Servicio Único</div>
-          <div class="plan-card__name" data-lang="en">One-Time Service</div>
-          <div class="plan-card__freq" data-lang="es">Cuando lo necesites</div>
-          <div class="plan-card__freq" data-lang="en">When you need it</div>
-        </div>
-        <div class="plan-card__divider"></div>
-        <ul class="plan-card__includes">
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Corte de grama de precisión</span><span data-lang="en">Precision lawn mowing</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Limpieza completa del patio</span><span data-lang="en">Complete yard cleanup</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Control básico de maleza</span><span data-lang="en">Basic weed control</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Evaluación gratuita del espacio</span><span data-lang="en">Free space assessment</span></li>
-        </ul>
-        <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20un%20servicio%20%C3%BAnico%20para%20mi%20propiedad."
-           class="btn btn-dark btn-full" target="_blank" rel="noopener">
-          💬 <span data-lang="es" class="lang-visible">Solicitar por WhatsApp</span><span data-lang="en">Request via WhatsApp</span>
-        </a>
-      </div>
+  function updateStreaks(n, m, s, w) {
+    document.getElementById('streak-nutrition').textContent = n;
+    document.getElementById('streak-movement').textContent = m;
+    document.getElementById('streak-sleep').textContent = s;
+    document.getElementById('streak-water').textContent = w;
+  }
 
-      <!-- Bi-weekly — featured -->
-      <div class="plan-card plan-card--featured fade-up" data-badge="Más Popular">
-        <div class="plan-card__header">
-          <div class="plan-card__name" data-lang="es">Plan Quincenal</div>
-          <div class="plan-card__name" data-lang="en">Bi-Weekly Plan</div>
-          <div class="plan-card__freq" data-lang="es">Cada 2 semanas</div>
-          <div class="plan-card__freq" data-lang="en">Every 2 weeks</div>
-        </div>
-        <div class="plan-card__divider"></div>
-        <ul class="plan-card__includes">
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Corte de grama de precisión</span><span data-lang="en">Precision lawn mowing</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Poda y escultura de arbustos</span><span data-lang="en">Shrub sculpting & trimming</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Control de maleza</span><span data-lang="en">Weed control</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Limpieza de bordes y aceras</span><span data-lang="en">Edge & walkway cleanup</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Prioridad en agenda</span><span data-lang="en">Priority scheduling</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Reporte de estado mensual</span><span data-lang="en">Monthly status report</span></li>
-        </ul>
-        <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20el%20plan%20quincenal%20de%20mantenimiento."
-           class="btn btn-primary btn-full" target="_blank" rel="noopener">
-          💬 <span data-lang="es" class="lang-visible">Quiero este plan</span><span data-lang="en">I want this plan</span>
-        </a>
-      </div>
+  // ── Week Grid ──────────────────────────────────────────────────
+  function buildWeek() {
+    const grid = document.getElementById('week-grid');
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const today = new Date().getDay();
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}');
 
-      <!-- Commercial -->
-      <div class="plan-card fade-up">
-        <div class="plan-card__header">
-          <div class="plan-card__name" data-lang="es">Paisajismo Comercial</div>
-          <div class="plan-card__name" data-lang="en">Commercial Landscaping</div>
-          <div class="plan-card__freq" data-lang="es">Cotización personalizada</div>
-          <div class="plan-card__freq" data-lang="en">Custom quote</div>
-        </div>
-        <div class="plan-card__divider"></div>
-        <ul class="plan-card__includes">
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Diseño paisajista completo</span><span data-lang="en">Full landscape design</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Mantenimiento de grandes áreas</span><span data-lang="en">Large area maintenance</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">HOA, urbanizaciones y complejos</span><span data-lang="en">HOA, communities & complexes</span></li>
-          <li class="plan-include"><span class="plan-include__check">✦</span><span data-lang="es">Hoteles, oficinas y retail</span><span data-lang="en">Hotels, offices & retail</span></li>
-        </ul>
-        <a href="#cotizacion" class="btn btn-dark btn-full">
-          ✉️ <span data-lang="es" class="lang-visible">Solicitar propuesta</span><span data-lang="en">Request proposal</span>
-        </a>
-      </div>
+    for (let i = 0; i < 7; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'day-cell' + (i === today ? ' today' : '');
+      const d = new Date();
+      d.setDate(d.getDate() - today + i);
+      const key = d.toISOString().split('T')[0];
+      const saved = history[key];
+      cell.innerHTML = `<div class="day-name">${days[i]}</div><div class="day-score">${saved ? saved.score : '—'}</div>`;
+      grid.appendChild(cell);
+    }
+  }
 
-    </div>
-  </div>
-</section>
+  // ── Save / Load ────────────────────────────────────────────────
+  function saveDay() {
+    const score = parseFloat(document.getElementById('score-num').textContent);
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}');
+    history[TODAY_KEY] = {
+      score,
+      checks: [...document.querySelectorAll('.check-card.done')].map(el => el.dataset.id),
+      water: waterFilled,
+      movement: [...document.querySelectorAll('.movement-btn.active')].map(el => el.dataset.mov),
+      sleepHours: document.getElementById('sleep-hours').value,
+      sleepQuality: qualityRating,
+      meals: {
+        b: document.getElementById('meal-breakfast').value,
+        l: document.getElementById('meal-lunch').value,
+        d: document.getElementById('meal-dinner').value,
+      },
+      note: document.getElementById('daily-note').value,
+    };
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    showToast('DAY SAVED ✓');
+    // refresh week
+    document.getElementById('week-grid').innerHTML = '';
+    buildWeek();
+  }
 
+  function loadToday() {
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}');
+    const saved = history[TODAY_KEY];
+    if (!saved) return;
+    saved.checks?.forEach(id => {
+      document.querySelector(`[data-id="${id}"]`)?.classList.add('done');
+    });
+    waterFilled = saved.water || 0;
+    updateWater();
+    saved.movement?.forEach(mov => {
+      document.querySelector(`[data-mov="${mov}"]`)?.classList.add('active');
+    });
+    if (saved.sleepHours) document.getElementById('sleep-hours').value = saved.sleepHours;
+    if (saved.sleepQuality) {
+      qualityRating = saved.sleepQuality;
+      document.querySelectorAll('.qdot')[saved.sleepQuality - 1]?.classList.add('sel');
+    }
+    if (saved.meals) {
+      document.getElementById('meal-breakfast').value = saved.meals.b || '';
+      document.getElementById('meal-lunch').value = saved.meals.l || '';
+      document.getElementById('meal-dinner').value = saved.meals.d || '';
+    }
+    if (saved.note) document.getElementById('daily-note').value = saved.note;
+    updateScore();
+  }
 
-<!-- ============================================================
-     COMMERCIAL SECTION
-     ============================================================ -->
-<section class="section commercial-section" id="comercial">
-  <div class="container">
-    <div class="commercial-inner">
+  function resetDay() {
+    if (!confirm('Reset today? This clears unsaved progress.')) return;
+    document.querySelectorAll('.check-card').forEach(c => c.classList.remove('done'));
+    document.querySelectorAll('.movement-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.qdot').forEach(d => d.classList.remove('sel'));
+    waterFilled = 0; qualityRating = 0;
+    updateWater();
+    ['meal-breakfast','meal-lunch','meal-dinner','daily-note'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('sleep-hours').value = '';
+    updateScore();
+  }
 
-      <div class="fade-up">
-        <div class="commercial-eyebrow">
-          <span data-lang="es" class="lang-visible">Proyectos de gran escala</span>
-          <span data-lang="en">Large-scale projects</span>
-        </div>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
 
-        <h2 class="commercial-title">
-          <span data-lang="es" class="lang-visible">Paisajismo comercial<br />de <em>primer nivel.</em></span>
-          <span data-lang="en">Commercial landscaping<br />at the <em>highest level.</em></span>
-        </h2>
+  // Sleep hours change
+  document.getElementById('sleep-hours').addEventListener('change', updateScore);
 
-        <p class="commercial-subtitle">
-          <span data-lang="es" class="lang-visible">Trabajamos con propiedades comerciales, urbanizaciones, hoteles y proyectos corporativos que exigen estándares de excelencia. Diseño, instalación y mantenimiento continuo bajo un solo equipo.</span>
-          <span data-lang="en">We work with commercial properties, communities, hotels, and corporate projects that demand excellence. Design, installation, and ongoing maintenance under one team.</span>
-        </p>
-
-        <div class="commercial-features">
-          <div class="commercial-feature">
-            <div class="commercial-feature__icon">🏢</div>
-            <span data-lang="es" class="lang-visible">Edificios de oficinas, retail y locales comerciales</span>
-            <span data-lang="en">Office buildings, retail spaces, and commercial premises</span>
-          </div>
-          <div class="commercial-feature">
-            <div class="commercial-feature__icon">🏘️</div>
-            <span data-lang="es" class="lang-visible">HOA, urbanizaciones y comunidades residenciales</span>
-            <span data-lang="en">HOA, gated communities, and residential complexes</span>
-          </div>
-          <div class="commercial-feature">
-            <div class="commercial-feature__icon">🏨</div>
-            <span data-lang="es" class="lang-visible">Hoteles, resorts y propiedades de hospitalidad</span>
-            <span data-lang="en">Hotels, resorts, and hospitality properties</span>
-          </div>
-          <div class="commercial-feature">
-            <div class="commercial-feature__icon">📐</div>
-            <span data-lang="es" class="lang-visible">Diseño paisajista personalizado con planos detallados</span>
-            <span data-lang="en">Custom landscape design with detailed plans</span>
-          </div>
-        </div>
-
-        <a href="#cotizacion" class="btn btn-primary btn-lg">
-          ✉️ <span data-lang="es" class="lang-visible">Solicitar propuesta comercial</span><span data-lang="en">Request commercial proposal</span>
-        </a>
-      </div>
-
-      <div class="commercial-stats fade-up">
-        <div class="commercial-stat">
-          <div class="commercial-stat__num">100%</div>
-          <div class="commercial-stat__label" data-lang="es">Proyectos completados</div>
-          <div class="commercial-stat__label" data-lang="en">Projects completed</div>
-        </div>
-        <div class="commercial-stat">
-          <div class="commercial-stat__num">5★</div>
-          <div class="commercial-stat__label" data-lang="es">Calificación promedio</div>
-          <div class="commercial-stat__label" data-lang="en">Average rating</div>
-        </div>
-        <div class="commercial-stat commercial-stat--wide">
-          <div style="font-size:1.8rem; flex-shrink:0;">🌴</div>
-          <div>
-            <div class="commercial-stat__headline" data-lang="es">Un exterior impecable aumenta el valor de tu propiedad</div>
-            <div class="commercial-stat__headline" data-lang="en">A flawless exterior increases your property value</div>
-            <div class="commercial-stat__body" data-lang="es">El paisajismo profesional es una inversión, no un gasto.</div>
-            <div class="commercial-stat__body" data-lang="en">Professional landscaping is an investment, not an expense.</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     QUOTE FORM / CONTACT
-     ============================================================ -->
-<section class="section quote-section" id="cotizacion">
-  <div class="container">
-    <div class="quote-wrapper">
-
-      <div class="quote-info fade-up">
-        <p class="section-eyebrow">
-          <span data-lang="es" class="lang-visible">Contacto</span>
-          <span data-lang="en">Contact us</span>
-        </p>
-        <h2 class="quote-info__title">
-          <span data-lang="es" class="lang-visible">Hablemos sobre<br />tu proyecto.</span>
-          <span data-lang="en">Let's talk about<br />your project.</span>
-        </h2>
-        <p class="quote-info__desc">
-          <span data-lang="es" class="lang-visible">Llámanos o envía el formulario. Te contactamos en menos de 24 horas con una propuesta personalizada y sin compromiso.</span>
-          <span data-lang="en">Call us or submit the form. We'll reach out within 24 hours with a personalized, no-obligation proposal.</span>
-        </p>
-
-        <div class="quote-info__perks">
-          <div class="quote-perk">
-            <div class="quote-perk__icon">📞</div>
-            <span>(939) 438-7228</span>
-          </div>
-          <div class="quote-perk">
-            <div class="quote-perk__icon">💬</div>
-            <span>WhatsApp: (939) 438-7228</span>
-          </div>
-          <div class="quote-perk">
-            <div class="quote-perk__icon">📸</div>
-            <span>@patiolimpio_pr</span>
-          </div>
-          <div class="quote-perk">
-            <div class="quote-perk__icon">⚡</div>
-            <span data-lang="es" class="lang-visible">Respuesta en menos de 24 horas</span>
-            <span data-lang="en">Response within 24 hours</span>
-          </div>
-        </div>
-
-        <div class="quote-ctas">
-          <a href="tel:+19394387228" class="btn btn-dark btn-lg btn-full">
-            📞 <span data-lang="es" class="lang-visible">Llamar ahora</span><span data-lang="en">Call now</span>
-          </a>
-          <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n%20para%20mi%20propiedad."
-             class="btn btn-whatsapp btn-lg btn-full" target="_blank" rel="noopener">
-            💬 <span data-lang="es" class="lang-visible">Escribir por WhatsApp</span><span data-lang="en">Message on WhatsApp</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="fade-up">
-        <div class="quote-form">
-          <form id="quoteForm" novalidate>
-
-            <div class="form-row form-row--2col">
-              <div class="form-group">
-                <label for="fname">
-                  <span data-lang="es" class="lang-visible">Nombre <span>*</span></span>
-                  <span data-lang="en">Name <span>*</span></span>
-                </label>
-                <input type="text" id="fname" name="name" class="form-control"
-                  placeholder="Tu nombre" required autocomplete="given-name" />
-              </div>
-              <div class="form-group">
-                <label for="fphone">
-                  <span data-lang="es" class="lang-visible">Teléfono <span>*</span></span>
-                  <span data-lang="en">Phone <span>*</span></span>
-                </label>
-                <input type="tel" id="fphone" name="phone" class="form-control"
-                  placeholder="939-XXX-XXXX" required autocomplete="tel" />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="femail">
-                  <span data-lang="es" class="lang-visible">Correo electrónico</span>
-                  <span data-lang="en">Email address</span>
-                </label>
-                <input type="email" id="femail" name="email" class="form-control"
-                  placeholder="correo@ejemplo.com" autocomplete="email" />
-              </div>
-            </div>
-
-            <div class="form-row form-row--2col">
-              <div class="form-group">
-                <label for="fservice">
-                  <span data-lang="es" class="lang-visible">Servicio de interés <span>*</span></span>
-                  <span data-lang="en">Service needed <span>*</span></span>
-                </label>
-                <select id="fservice" name="service" class="form-control" required>
-                  <option value="" disabled selected></option>
-                  <option value="diseno-paisajista" data-lang="es">Diseño Paisajista</option>
-                  <option value="diseno" data-lang="es">Diseño de jardín</option>
-                  <option value="corte-grama" data-lang="es">Corte de grama</option>
-                  <option value="poda" data-lang="es">Poda y escultura de plantas</option>
-                  <option value="limpieza" data-lang="es">Limpieza y restauración</option>
-                  <option value="maleza" data-lang="es">Control de maleza</option>
-                  <option value="plan-quincenal" data-lang="es">Plan quincenal</option>
-                  <option value="comercial" data-lang="es">Proyecto comercial</option>
-                  <option value="landscape-design" data-lang="en">Landscape Design</option>
-                  <option value="garden-design" data-lang="en">Garden Design</option>
-                  <option value="lawn-care" data-lang="en">Lawn Care</option>
-                  <option value="tree-sculpting" data-lang="en">Tree & Shrub Sculpting</option>
-                  <option value="cleanup" data-lang="en">Cleanup & Restoration</option>
-                  <option value="weed-mgmt" data-lang="en">Weed Management</option>
-                  <option value="biweekly-plan" data-lang="en">Bi-Weekly Plan</option>
-                  <option value="commercial-en" data-lang="en">Commercial Project</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="ftype">
-                  <span data-lang="es" class="lang-visible">Tipo de propiedad</span>
-                  <span data-lang="en">Property type</span>
-                </label>
-                <select id="ftype" name="property_type" class="form-control">
-                  <option value="" disabled selected></option>
-                  <option value="residencial" data-lang="es">Residencial</option>
-                  <option value="comercial" data-lang="es">Comercial</option>
-                  <option value="hoa" data-lang="es">HOA / urbanización</option>
-                  <option value="hotel" data-lang="es">Hotel / resort</option>
-                  <option value="otro" data-lang="es">Otro</option>
-                  <option value="residential" data-lang="en">Residential</option>
-                  <option value="commercial" data-lang="en">Commercial</option>
-                  <option value="hoa-en" data-lang="en">HOA / gated community</option>
-                  <option value="hotel-en" data-lang="en">Hotel / resort</option>
-                  <option value="other" data-lang="en">Other</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fmessage">
-                  <span data-lang="es" class="lang-visible">Cuéntanos sobre tu proyecto</span>
-                  <span data-lang="en">Tell us about your project</span>
-                </label>
-                <textarea id="fmessage" name="message" class="form-control" rows="3"
-                  placeholder="Tamaño aproximado, tipo de trabajo deseado, municipio…"></textarea>
-              </div>
-            </div>
-
-            <div class="form-submit">
-              <button type="submit" class="btn btn-primary btn-full btn-lg">
-                ✉️
-                <span data-lang="es" class="lang-visible">Solicitar cotización gratuita</span>
-                <span data-lang="en">Request free estimate</span>
-              </button>
-            </div>
-            <p class="form-note">
-              <span data-lang="es" class="lang-visible">🔒 Tu información es privada. Te contactamos al número que nos dejes.</span>
-              <span data-lang="en">🔒 Your info stays private. We'll reach out at the number you provide.</span>
-            </p>
-
-          </form>
-
-          <div id="formSuccess" class="form-success">
-            <div class="form-success__icon">🌿</div>
-            <h3 class="form-success__title" data-lang="es">¡Recibimos tu solicitud!</h3>
-            <h3 class="form-success__title" data-lang="en">Request received!</h3>
-            <p class="form-success__desc" data-lang="es">Te contactamos en menos de 24 horas. También puedes llamarnos directamente.</p>
-            <p class="form-success__desc" data-lang="en">We'll reach out within 24 hours. You can also call us directly.</p>
-            <a href="tel:+19394387228" class="btn btn-dark" style="margin-top:8px;">
-              📞 (939) 438-7228
-            </a>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer__grid">
-
-      <div>
-        <div class="footer__brand-logo">
-          <img src="./patio-limpio-logo-dark-optimized.png" alt="Patio Limpio PR"
-               onerror="this.outerHTML='<span style=\'font-weight:900;color:#0a0a0a;font-family:sans-serif\'>PATIO LIMPIO PR</span>'" />
-        </div>
-        <p class="footer__brand-desc" data-lang="es">Diseño paisajista y mantenimiento de alto nivel en Puerto Rico.</p>
-        <p class="footer__brand-desc" data-lang="en">Premier landscape design and maintenance across Puerto Rico.</p>
-      </div>
-
-      <div>
-        <div class="footer__col-title" data-lang="es">Servicios</div>
-        <div class="footer__col-title" data-lang="en">Services</div>
-        <ul class="footer__links">
-          <li><a href="#servicios" data-lang="es">Diseño Paisajista</a><a href="#servicios" data-lang="en">Landscape Design</a></li>
-          <li><a href="#servicios" data-lang="es">Diseño de jardines</a><a href="#servicios" data-lang="en">Garden design</a></li>
-          <li><a href="#servicios" data-lang="es">Corte de grama</a><a href="#servicios" data-lang="en">Lawn care</a></li>
-          <li><a href="#servicios" data-lang="es">Poda de plantas</a><a href="#servicios" data-lang="en">Tree trimming</a></li>
-          <li><a href="#comercial" data-lang="es">Proyectos comerciales</a><a href="#comercial" data-lang="en">Commercial projects</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer__col-title" data-lang="es">Contacto</div>
-        <div class="footer__col-title" data-lang="en">Contact</div>
-        <div class="footer__contact">
-          <div class="footer__contact-item">
-            <span>📞</span>
-            <a href="tel:+19394387228">(939) 438-7228</a>
-          </div>
-          <div class="footer__contact-item">
-            <span>💬</span>
-            <a href="https://wa.me/19394387228" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-          <div class="footer__contact-item">
-            <span>📸</span>
-            <a href="https://www.instagram.com/patiolimpio_pr/" target="_blank" rel="noopener">@patiolimpio_pr</a>
-          </div>
-          <div class="footer__contact-item">
-            <span>📍</span>
-            <span>Puerto Rico</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer__bottom">
-      <span>© 2025 Patio Limpio PR.
-        <span data-lang="es" class="lang-visible">Todos los derechos reservados.</span>
-        <span data-lang="en">All rights reserved.</span>
-      </span>
-      <a href="tel:+19394387228" style="color:var(--gold-light);font-weight:700;letter-spacing:.04em;">
-        📞 (939) 438-7228
-      </a>
-    </div>
-  </div>
-</footer>
-
-
-<!-- Floating WhatsApp -->
-<div class="floating-cta">
-  <span class="floating-cta__label">WhatsApp</span>
-  <a href="https://wa.me/19394387228?text=Hola%2C%20me%20interesa%20una%20cotizaci%C3%B3n."
-     class="floating-cta__btn" target="_blank" rel="noopener noreferrer"
-     aria-label="Contactar por WhatsApp">💬</a>
-</div>
-
-<script src="./script-2.js"></script>
+  init();
+</script>
 </body>
 </html>
